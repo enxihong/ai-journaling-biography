@@ -1,0 +1,29 @@
+flowchart LR
+    login([login]) --> start(( ))
+    start --> g1{X}
+
+    %% Journal branch
+    g1 --> write["write diary journal"]
+    g2{X} -- repeat --> write
+    write --> g2
+    g2 --> enough{"enough data?"}
+    enough -- no --> g2
+    enough -- yes --> sharable{"sharable content?"}
+
+    sharable -- no --> private["add to private 🔒"]
+    private --> endPrivate((( )))
+
+    sharable -- yes --> addShare["add to share context"]
+    addShare --> diary["diary journal"]
+    addShare --> bio["build biography"]
+    diary --> choose["choose people to share"]
+    bio --> choose
+    choose --> endShare((( )))
+
+    %% Family tree branch
+    g1 --> family["family tree (write)"]
+    family --> g3{X}
+    g3 -- yes --> g4{+}
+    g3 --> someElse["some else"]
+    someElse --> g4
+    g4 --> bio
