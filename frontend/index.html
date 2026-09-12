@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Journal & Biography</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1rem; }
+  h1 { font-size: 1.4rem; }
+  section { border: 1px solid #ddd; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem; }
+  #chat-log { min-height: 120px; border: 1px solid #eee; padding: 0.5rem; margin-bottom: 0.5rem; }
+  .msg-user { color: #333; }
+  .msg-assistant { color: #0a5; }
+  input, textarea, button { font-size: 1rem; padding: 0.4rem; }
+  input[type=text] { width: 70%; }
+  button { cursor: pointer; }
+  .entry { border-bottom: 1px solid #eee; padding: 0.5rem 0; }
+  .person { border-bottom: 1px solid #eee; padding: 0.5rem 0; }
+  pre { white-space: pre-wrap; }
+</style>
+</head>
+<body>
+
+<h1>AI Journal & Biography — MVP</h1>
+
+<section>
+  <h2>1. Talk about your life</h2>
+  <div id="chat-log"></div>
+  <input type="text" id="chat-input" placeholder="Type here...">
+  <button onclick="sendChat()">Send</button>
+  <button onclick="saveJournal()">Save as journal entry</button>
+</section>
+
+<section>
+  <h2>2. Journal entries</h2>
+  <button onclick="loadJournal()">Refresh</button>
+  <button onclick="findPatterns()">Detect patterns</button>
+  <div id="journal-list"></div>
+  <div id="patterns-output"></div>
+</section>
+
+<section>
+  <h2>3. Family tree</h2>
+  <input type="text" id="person-name" placeholder="Name">
+  <input type="text" id="person-rel" placeholder="Relationship (e.g. Grandfather)">
+  <button onclick="createPerson()">Add person</button>
+  <div id="persons-list"></div>
+</section>
+
+<section>
+  <h2>4. Biography</h2>
+  <button onclick="generateBiography()">Generate biography chapter</button>
+  <pre id="biography-output"></pre>
+</section>
+
+<script src="app.js"></script>
+</body>
+</html>
