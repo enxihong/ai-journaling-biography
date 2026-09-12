@@ -1,29 +1,46 @@
-flowchart LR
-    login([login]) --> start(( ))
-    start --> g1{X}
+%% Current flow — revised by docs/product-differentiation.md
+%% Changes from the whiteboard as first drawn:
+%%   - the "enough data?" gate is GONE (it was the interview instinct)
+%%   - "off the record" short-circuits before anything is stored
+%%   - on-device pseudonymization + a user-visible payload receipt
+%%   - the diary is drafted after the fact, as a byproduct, never the ask
+%%   - the family tree fills from people mentioned in stories, not from a form
+flowchart TB
+    login([login]) --> talk["talk to companion<br/>(push-to-talk voice note)"]
 
-    %% Journal branch
-    g1 --> write["write diary journal"]
-    g2{X} -- repeat --> write
-    write --> g2
-    g2 --> enough{"enough data?"}
-    enough -- no --> g2
-    enough -- yes --> sharable{"sharable content?"}
+    %% Conversation loop — reacts, does not interview
+    talk --> offRecord{"off the record?"}
+    offRecord -- yes --> discard["never stored<br/>no transcript, no memory"]
+    discard --> talk
 
-    sharable -- no --> private["add to private 🔒"]
+    offRecord -- no --> anon["on-device pseudonymize<br/>Mum to PERSON_1"]
+    anon --> receipt[["payload receipt<br/>(user can inspect what left)"]]
+    anon --> llm["LLM reply"]
+    llm --> speak["voice reply<br/>(interruptible)"]
+    speak --> talk
+
+    %% People mentioned in passing build the tree quietly
+    anon --> mentions["people mentioned in the story"]
+    mentions --> tree["family tree assembles quietly"]
+    tree --> confirm{"confirm person?<br/>(one tap, optional)"}
+    confirm --> bio
+
+    %% The diary is a byproduct, drafted after the fact
+    anon --> store[("stored memories")]
+    store -.->|end of day, batched| draft["draft diary entry<br/>in the user's own phrasing"]
+    draft --> review{"user reviews"}
+
+    review -- bin --> gone(("discarded"))
+    review -- keep private --> private["private 🔒"]
     private --> endPrivate((( )))
 
-    sharable -- yes --> addShare["add to share context"]
-    addShare --> diary["diary journal"]
-    addShare --> bio["build biography"]
+    review -- share --> shareCtx["share context"]
+    shareCtx --> diary["diary journal"]
+    shareCtx --> bio["build biography"]
     diary --> choose["choose people to share"]
     bio --> choose
     choose --> endShare((( )))
 
-    %% Family tree branch
-    g1 --> family["family tree (write)"]
-    family --> g3{X}
-    g3 -- yes --> g4{+}
-    g3 --> someElse["some else"]
-    someElse --> g4
-    g4 --> bio
+    %% Unprompted return visit
+    store -.->|weeks later| callback["callback<br/>'a year ago tonight...'"]
+    callback --> talk

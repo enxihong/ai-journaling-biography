@@ -1,11 +1,15 @@
 # Whiteboard Plan — AI Journal + Family (+ Mood Tracker)
 
 > **Source:** team whiteboard session, 2026-09-12
-> **Status:** agreed plan — this is the shape of the product we are building
-> **Relationship to other docs:** this is the short version. The long-form
-> specification of the same flow lives in
-> [`family_memory_ai_detailed_plan.md`](./family_memory_ai_detailed_plan.md); the
-> diagram alone lives in [`ai-journal-flow.mermaid`](./ai-journal-flow.mermaid).
+> **Status:** historical record — the flow **as first drawn**. Parts of it have
+> since been revised; see
+> [`product-differentiation.md`](./product-differentiation.md) for the current
+> design direction and [`ai-journal-flow.mermaid`](./ai-journal-flow.mermaid)
+> for the current flow. The diagram below is deliberately left as it was on the
+> board.
+> **Relationship to other docs:** this is the short version of the original
+> plan. The long-form specification lives in
+> [`family_memory_ai_detailed_plan.md`](./family_memory_ai_detailed_plan.md).
 
 ![Whiteboard photo of the product flow, feature list, and to-do list](./images/whiteboard-plan.jpg)
 
@@ -87,6 +91,10 @@ flowchart LR
 - The journal loop is allowed to repeat indefinitely; "enough data?" is a
   readiness check, not a gate the user can fail.
 
+> **Since revised:** the "enough data?" gate has been **removed** entirely — it
+> was the interview instinct in flowchart form. Whatever the user said is
+> enough. See [`product-differentiation.md`](./product-differentiation.md) §1.
+
 ---
 
 ## 3. Feature list
@@ -101,6 +109,11 @@ flowchart LR
 | **Analysis** | Patterns across entries: themes, people, recurring topics. |
 | **Goals** | User-set intentions the journal can track against. |
 | **Mood tracker** | Mood captured alongside entries; feeds analysis and timelines. Bracketed on the board — a strong candidate, not yet committed. |
+
+> **Since revised:** mood is inferred from voice prosody and wording rather than
+> tapped into a picker, and voice became the primary input rather than one
+> feature among several. See
+> [`product-differentiation.md`](./product-differentiation.md) §3.
 
 ---
 
